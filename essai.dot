@@ -1,0 +1,16 @@
+digraph g {
+  0 [shape=circle];
+  i0 [style=invis];
+  i0 -> 0;
+  1 [shape=circle];
+  2 [shape=circle];
+  3 [shape=doublecircle];
+  0 -> 1 [label=a]
+  0 -> 0 [label=b]
+  1 -> 2 [label=b]
+  1 -> 1 [label=a]
+  2 -> 3 [label=a]
+  2 -> 0 [label=b]
+  3 -> 3 [label=b]
+  3 -> 3 [label=a]
+}
