@@ -4,11 +4,11 @@
 
 #set page(
   header: align(left)[
-    DM  #h(1fr)  Noé VINCENT
+    DM - $L^*$  #h(1fr)  Noé VINCENT
 
   ],
   footer: context [
-  PROG
+  FOND1 - LFC
   #h(1fr)
   #counter(page).display(
     "1 sur 1",
@@ -137,47 +137,50 @@
   Ainsi *$|S| <= N$*
 
 
-+ PENSER CE $tilde_T$ mins que de résiduels à
++ On pose $C_(T,S): Sigma^* -> S$ l'appplication qui à un mot associe sa classe d'équivalence pour $ tilde_T$ intersectée avec $S$.
+ 
+  Soit $ S_(n+1) = cases(S_n union {a_n} "si" a_n "existe", S_n "sinon"), S_0 =S $
+
+  où $a_n = q.a "tq" C_(T,S_n) (q.a) = emptyset$
   
-  Soit $(S,T)$ une paire correcte. Considérons A(S,T), l'automate déterministe associé (il est déterministe selon la réponse à la question 7.).
+  Montrons que $forall n in NN, (S_n, T)$ est correcte par récurrence. 
   
-  Cette automate étant déterministe on peut le compléter en ajoutant un sommet "poubelle" p et obtenir un automate A' complet et déterministe. 
+  D'abord, $S_0=S$ donc $(S,T)$ est correcte.
+
+  Supposons que $(S_k,T)$ est correcte pour un $k in NN$ fixé quelconque.
+
+  Si $exists.not a_k$, alors $S_(k+1) = S_k$ donc $(S_(k+1), T)$ est correcte.
+
+
+  Si $exists a_k$ alors par définition $a_k$ n'est T-équivalent avec aucun élement de $S_k$. De plus $(S_k,T)$ est correcte. Donc $(S_(k+1),T)$ est correcte. 
+
+  Ainsi, *$forall n in NN, (S_n,T)$ est correcte.*
+
+  Remarquons que $(|S_n|)_(n in NN)$ est strictement croissante tant qu'$a_n$ existe et constante dès qu'il n'existe plus aucun $a_n$. Or cette suite est majorée par N, donc elle converge forcément. Donc $(|S_n|)_(n in NN)$ converge.
+
+  Or $(S_n)_(n in NN)$ est croissante pour l'inclusion ($S_n subset S_(n+1)$). Ainsi $S_n$ converge et est constante dès un rang $R in NN$.
+
+  On pose donc $S'=S_R$.
+
+  On a donc que $(S', T)$ est correcte, montrons qu'elle est complête.
+
+  Par l'absurde:
+
+  Supposons que $ exists q in S', a in Sigma "tq" C_(T,S') = emptyset$ alors on a $S_(R+1) = S_R union {q.a}$. ABSURDE
+
+  car $S_R$ est la limite de $(S_n)_(n in NN)$.
+
+  *Ainsi $(S',T)$ est complète*.
+
+  On pourra donc calculer $S'$ en répetant les calculs des $S_n$ successifs jusqu'à convergence.
   
-  Or p est l'état tel que $forall u in Q$:
-
-  si $C_u = Sigma \\ {a in Sigma | (u,a,"_") in delta  } != emptyset$ alors:
-
-  $ forall c in C_u, (u,c,p) in delta' $
-
-  Autrement dit $C_u = {a in Sigma | exists.not v in S, u.a tilde_T v }$. 
-
-  On peut considérer $ C = union.big_(u in S) C_u$.
-
-  Ainsi $forall c in C, exists u in S "tq" exists.not v in S "tq" u.c tilde_T v$.
-  
-  Or $(u,c,p) in delta'$
-  
-  Ainsi p correspond au représentant de l'union des classes d'équivalences (pour $tilde_T$) n'ayant pas de représentant dans S.
-
-  Notons $p_0,p_1,...,p_n$ les classes d'équivalences distinctes en question. 
-  
-  Alors $S' = S union R({p_0,...,p_n})$ est tel que $(S',T)$ est correcte et complête.
-
-  où $R$ associe à chaque classe d'équivalence un représentant.
-
-  En effet, $forall u in S, forall a in Sigma$:
-  - Si $exists v in S "tq" u.a tilde_T v$ alors $exists v in S' "tq" u.a tilde_T v$ car $v in S'$
-  - Sinon $ exists p_i, "tq" R(p_i) in S' and u.a tilde_T R(p_i)$
-  
-  Remarquons que S conserve sa propriété de clôture par préfixe. En effet, on peut choisir pour chaque $p_i$ un mot de la forme $u.c$ où $u in S$, $c in Sigma^*$ de longueur minimale tel que 
-
-
 + cf automator.ml
 + Non traitée
+#pagebreak()
 
 = Algorithme d'apprentissage
 
-12. Lors de l'initialisation $(S,T) = ({epsilon},{epsilon})$. Cette paire est évidemment correcte (Il n'y a qu'un mot dans S).
+12.  Lors de l'initialisation $(S,T) = ({epsilon},{epsilon})$. Cette paire est évidemment correcte (Il n'y a qu'un mot dans S).
     
     La question 9. garantie que $S'$ est aussi correcte car elle n'ajoute à $S'$ aucun élement T-équivalent à un autre.
 
@@ -206,12 +209,16 @@
     On a donc montré que toutes les étapes de l'algorithme conservent la correction de la paire et que celle-ci est initialisée correcte. Ainsi *$(S,T)$ est correcte tout au long de l'éxecution de l'algorithme.*
 
 + cf automator.ml
-
 #pagebreak()
+14. Observons la trace d'execution suivante: 
+  #grid(
+        columns: 2,     // 2 means 2 auto-sized columns
+        gutter: 3%,    // space between columns
+        [
 
-14. ($*$ Magic Happens $*$: I become a computer)
+
+  ($*$ Magic Happens $*$: I become a computer)
   
-  Observons la trace d'execution suivante:
   - Initialisation : 
   
       $(S,T) = ({epsilon},{epsilon}) $
@@ -232,7 +239,7 @@
 
       On fait une requête d'équivalence sur $A(S,T)$:
 
-      INSERER PHOTO
+     Cela donne l'automate (Figure 1).
 
       La requête d'équivalence réussit !
 
@@ -241,6 +248,11 @@
   ($*$ Magic Happens again $*$: vuelvo a ser humano)
 
   L'algorithme a bien nécéssité $|{0,1}| = 2$ tours (deux requêtes d'équivalence) pour déterminer A(S,T) qui selon le résultat de la question 11. est minimal.
+
+        ],
+        [ #figure(image("image2.png",height: 50%,), caption:  " A(S,T) par automator ")]
+    )
+
 
 
 + cf automator.ml
@@ -265,7 +277,8 @@
     Donc $(q,a,q') in delta$. 
 
     Ainsi $delta' subset delta$ et $|delta'| = |delta|$ donc *$delta' = delta$*
-  + _*$=>$*_ Supposons $epsilon->^w w', w' in cal(L)$ dans A'. Alors, $w' in F' = F$ donc
+  + _*$=>$*_ Supposons $epsilon->^w w', w' in cal(L)$ dans A'. Alors, $w' in F' = F$ donc... Non rédigée.
+  + Non rédigée.
 
 + Lors de l'étape 2, on étend S. Ainsi sa taille croit d'au moins 1 (on ajoute au moins un sommet). Or, la question 12 donne que $(S,T)$ est toujours correcte. Ainsi selon la question 8. : 
   
@@ -273,7 +286,7 @@
 
   On peut donc borner le nombre de passage par l'étape 2 par $N$.
 
-19. Soit A l'automate (reconnaissant $cal(L)$) à minimiser.
++  Soit A l'automate (reconnaissant $cal(L)$) à minimiser.
     
     On propose d'appliquer l'algorithme $L^*$, avec les oracle suivants:
     - Oracle d'appartenance de w: on verifie si w est reconnu par A
@@ -287,7 +300,7 @@
       On verifie ensuite que $cal(L'') = emptyset$ en vérifitant que $F''$ est vide dans l'automate émondé. (càd aucun état final accessible).
 
       Si $cal(L'') =emptyset $ alors $cal(L) = cal(L)'$ $->$ A et A' sont équivalents. Sinon ils ne le sont pas.
-20. Soit $N$ le nombre de résiduels de $cal(L)$, soit $K$ la borne de la taille des contre-exemples. 
++  Soit $N$ le nombre de résiduels de $cal(L)$, soit $K$ la borne de la taille des contre-exemples. 
   
   Observons d'abord la complexite de la vérification de la T-équivalence.
 
@@ -307,6 +320,23 @@
   
   Cependant ce test n'est pas vraiment effectué. On réalise seulement la complétion (qui reviendra, si la paire est complète, à ne rien faire). 
 
-  Cette opération est au vus de l'implémentation en $O(K*|S|*|Sigma|*K) = O(K^3 * |Sigma|) $ 
+  Cette opération est en $O(N*|S|*|Sigma|*K) = O(N^2*K*|Sigma|) $ 
   
-  (Au plus K recherche de nouveaux états, opération qui est revient à $K*|Sigma|*K$ nouveaux tests de T-équivalence).
+  En effet, on effectue au plus N recherches de nouveaux états (car $|S|<N$), recherche qui revient à $|Sigma|*|S|$ tests de T-équivalence, or à l'aide de la mémoïsation, les tests de T équivalences ne coutent qu'au plus K appels à oracle en $O(1)$.
+
+  Ainsi l'opération ligne 2 a une compléxite en $O(N^2*K*|Sigma|)$
+
+  Selon la question 3., la création de l'automate est en $O(N^2 * |Sigma|* K)$ et la requête d'équivalence es en $O(1)$.
+
+  Ainsi l'opération ligne 3 a une compléxite en $O(N^2*K*|Sigma|)$
+
+  L'opération ligne 4 a une complexité en $O(1)$.
+
+  L'opération ligne 5 a une complexité en $O(K)$.
+
+  Ainsi, au global l'algorithme a une complexité en :
+
+  $ O(N^3 * K * |Sigma|) $
+
+  Plus le temps/la force de faire beaucoup plus...
+
