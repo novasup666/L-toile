@@ -25,7 +25,7 @@ let print_word (w: word) =
 
 (* make_t_equiv oracle t returns a function computing T-equivalence
 that uses oracle to know whether a word should be recognized *)
-let make_t_equiv (oracle: word -> bool) (t: language) : word * word -> bool =
+let make_t_equiv (oracle: word -> bool) (t: language) :( word * word) -> bool =
   let res (w1,w2) = 
     let rec inner t =
       match t with

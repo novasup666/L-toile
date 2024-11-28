@@ -305,4 +305,8 @@
 
   Ainsi le test de complétude est en $O(N^2*|Sigma|*K)$.
   
-  Cependant ce test n'est pas vraiment effectué. On réalise seulement la complétion (qui reviendra, si la paire est complète, à ne rien faire). Cette opération est au vus de l'implémentation en 
+  Cependant ce test n'est pas vraiment effectué. On réalise seulement la complétion (qui reviendra, si la paire est complète, à ne rien faire). 
+
+  Cette opération est au vus de l'implémentation en $O(K*|S|*|Sigma|*K) = O(K^3 * |Sigma|) $ 
+  
+  (Au plus K recherche de nouveaux états, opération qui est revient à $K*|Sigma|*K$ nouveaux tests de T-équivalence).
