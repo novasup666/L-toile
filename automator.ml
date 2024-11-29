@@ -121,16 +121,19 @@ let rec ask_equiv (a: fa) : bool =
 (* guess oracle sigma s t returns the automaton associated with S and T
 and based on oracle *)
 let guess (oracle: word -> bool) (sigma: letter list) (s: language) (t: language) : fa =
+  (*On suit la méthode décrite dans le pdf*)
   let n = List.length s in
   let finaux = Array.make n false in
   let sont_tequiv = make_t_equiv oracle t in
   let transi = Array.make n ([]) in
+
   let rec compute_finaux s i = 
     match s with
     | [] -> ()
     |x::xs-> finaux.(i) <- oracle(x); compute_finaux xs (i+1)
   in
   compute_finaux s 0;
+
   let rec compute_transi l i =
     match l with
     | [] -> ()
@@ -150,6 +153,7 @@ let guess (oracle: word -> bool) (sigma: letter list) (s: language) (t: language
       )
   in
   compute_transi s 0;
+
   let rec compute_initial s i = 
     match s with
     | [] -> failwith "Il n'y à pas epsilon dans S"
@@ -165,6 +169,8 @@ let guess (oracle: word -> bool) (sigma: letter list) (s: language) (t: language
   fa
  
 let rec pp_l l = 
+  (*Language "pretty" printer*)
+
   match l with
   |[] -> ()
   |w::ws -> print_word w;

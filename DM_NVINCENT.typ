@@ -176,11 +176,10 @@
   
 + cf automator.ml
 + Non traitée
-#pagebreak()
 
 = Algorithme d'apprentissage
 
-12.  Lors de l'initialisation $(S,T) = ({epsilon},{epsilon})$. Cette paire est évidemment correcte (Il n'y a qu'un mot dans S).
+12.   Lors de l'initialisation $(S,T) = ({epsilon},{epsilon})$. Cette paire est évidemment correcte (Il n'y a qu'un mot dans S).
     
     La question 9. garantie que $S'$ est aussi correcte car elle n'ajoute à $S'$ aucun élement T-équivalent à un autre.
 
@@ -209,8 +208,7 @@
     On a donc montré que toutes les étapes de l'algorithme conservent la correction de la paire et que celle-ci est initialisée correcte. Ainsi *$(S,T)$ est correcte tout au long de l'éxecution de l'algorithme.*
 
 + cf automator.ml
-#pagebreak()
-14. Observons la trace d'execution suivante: 
++ Observons la trace d'execution suivante: 
   #grid(
         columns: 2,     // 2 means 2 auto-sized columns
         gutter: 3%,    // space between columns
